@@ -1,0 +1,93 @@
+spring:
+  datasource:
+    username: sa
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  config:
+    import: optional:secrets_prod.yaml
+    activate:
+      on-profile: test
+
+  application:
+    name: SHORTNER
+app:
+  jwtSecret: 6B58703273357638792F423F4428472B4B6250655368566D597133743677397A244326462948404D635166546A576E5A7234753778214125442A472D4B614E64
+  jwtExpirationInMs: 604800000
+  cors:
+    allowedOrigins: "*"
+  max-cell-size: 30
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+
+info:
+  app:
+    description: This is a URL shortner web application.
+    version: 1.0.0
+
+---
+
+spring:
+  config:
+    import: optional:secrets_prod.yaml
+    activate:
+      on-profile: prod
+  application:
+    name: SHORTNER
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: jdbc:postgresql://dpg-cqainueehbks73b23dj0-a/shortner
+    username: dck_8hua_user
+    password: OJqyFaZQZbImQVzAVOZkX3WVvt2ZHS5t
+    driverClassName: org.postgresql.Driver
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+info:
+  app:
+    description: This is a URL shortner web application.
+    version: 1.0.0
+
+---
+server:
+  port: 8080
+spring:
+  config:
+    import: optional:secrets_dev.yaml
+    activate:
+      on-profile: dev
+  application:
+    name: SHORTNER
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+info:
+  app:
+    description: This is a URL shortner web application.
+    version: 1.0.0

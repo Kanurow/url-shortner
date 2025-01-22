@@ -1,22 +1,29 @@
 package com.rowland.engineering.shortner.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
+
+
 @Entity
 @Data
+@Table(name = "url_mapping", uniqueConstraints = {@UniqueConstraint(columnNames = "shortUrl")})
 public class UrlMapping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+    @NotNull
     private String shortUrl;
+    @NotNull
     private String originalUrl;
-    private int clickCount;
-    private LocalDateTime createdDate;
+    private long clickCount = 0;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private LocalDateTime createdDate = LocalDateTime.now();
+
+
+    private long userId;
+    private boolean isDeleted = false;
 }

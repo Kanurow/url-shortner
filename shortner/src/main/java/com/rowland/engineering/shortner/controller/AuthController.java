@@ -28,7 +28,6 @@ public class AuthController {
         return authenticationService.registerNewUser(registerUser);
     }
 
-
     @Operation(
             description = "Post request for signing in users already existing in our database",
             summary = "Enables user log in - Users can user either username or email address"
